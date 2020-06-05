@@ -1,0 +1,20 @@
+{
+  "name": "apptestsmartcode",
+  "version": "1.0.0",
+  "description": "App de Prueba sobre la Vacante Desarrollador Reactjs y Nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "reactjs",
+    "nodejs",
+    "mysql",
+    "app"
+  ],
+  "author": "Axlin Miranda <axlina90@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
