@@ -51,10 +51,24 @@ const update = (req, res) => {
 };
 
 
+const eliminar = (req, res) => {
+    //response.send('Todo correcto');
+    Controller.eliminar(req.body)
+    	.then(ticket =>{
+    		response.success(req, res, ticket, 200);
+    	})
+    	.catch((err) => {
+    		response.error(req, res, err.message, 500);
+    	});
+    ;
+};
+
+
 router.get("/:id", lista);
 router.post("/", solicitar);
 router.get("/", listado);
 router.put("/", update);
+router.post("/delete", eliminar);
 
 
 module.exports = router;

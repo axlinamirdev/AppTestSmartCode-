@@ -26,13 +26,18 @@ module.exports =(injectedStore) => {
     }
 
     const asignarTicket = async (body) => {
-      const ticket = {
-          id: body.id,
-          ticket_pedido: 1,
-      }
+        const ticket = {
+            id: body.id,
+            ticket_pedido: 1,
+        }
 
-     return store.postinsert(TABLA, ticket);        
-  };
+      return store.postinsert(TABLA, ticket);        
+    };
+
+    const eliminar = async (body) => {
+      const { id } = body;
+      return store.eliminar(TABLA, id);
+    }
     
 
 
@@ -40,7 +45,8 @@ module.exports =(injectedStore) => {
         listaTicketAsignado,
         solicitarTicket,
         listaTicket,
-        asignarTicket
+        asignarTicket,
+        eliminar
 	};
 }
 

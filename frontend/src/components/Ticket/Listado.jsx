@@ -25,6 +25,22 @@ const Listado = () => {
                                 });
     }
 
+    const handleClickEliminar = async (id) => {
+        const data ={id};
+        const result = await axios.post("http://localhost:5000/api/ticket/delete",data)
+                                .then(response=>{
+                                if (response.data.status===200) {
+                                    alert("Se ha eliminado el ticket");
+                                }
+                                else {
+                                    alert("Hubo un error");
+                                }
+                                }).catch(error=>{
+                                    alert("Error 34 "+error)
+                                });
+
+    }
+
     return(
         <table className="table">
         <thead className="thead-dark">
@@ -44,8 +60,7 @@ const Listado = () => {
                         <td>{item.ticket_pedido}</td>
                         <td>
                             <button className="btn btn-warning btn-sm mr-2" type="button" onClick={() => handleClickAsignar(item.id)}>Asignar</button>
-                            <button className="btn btn-success btn-sm mr-2" type="button">Editar</button>
-                            <button className="btn btn-danger btn-sm" type="button">Eliminar</button>
+                            <button className="btn btn-danger btn-sm" type="button" onClick={() => handleClickEliminar(item.id)}>Eliminar</button>
                         </td>
                     </tr>
                 )
