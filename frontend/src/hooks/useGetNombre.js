@@ -5,7 +5,10 @@ const useListaUsuario = () => {
     useEffect(()=>{
         const getUser = () => {
             const usuario = JSON.parse(localStorage.getItem('user'));
-            setNombre(usuario.nombre);
+            if(usuario!=null)
+            {
+                setNombre(usuario.nombre);
+            }
         }
         getUser();
     },[]);

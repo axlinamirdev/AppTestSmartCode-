@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 import useGetNombre from "../hooks/useGetNombre";
 
-const Menu = () => {
+const Menu = (props) => {
     const nombre = useGetNombre();
     
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        props.history.push("/");
+    }
+
     return(
         <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <a className="navbar-brand" href="#">App SmartCode</a>
@@ -18,9 +24,9 @@ const Menu = () => {
                         <p className="text-white pt-2 pr-5">{nombre}</p>
                     </li>
                     <li>
-                        <Link className="btn btn-secondary" to="/">
+                        <button className="btn btn-secondary" onClick={handleLogout}>
                             Cerrar Sesión
-                        </Link>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -28,4 +34,4 @@ const Menu = () => {
     );
 };
 
-export default Menu;
+export default withRouter(Menu);
