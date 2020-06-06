@@ -4,6 +4,10 @@ import "../assets/css/login.css";
 import {Link }from "react-router-dom";
 import axios from "axios";
 
+import Toastr from 'toastr2';
+
+const toastr = new Toastr();
+
 const Login = (props) => {
 
     const [form, setForm ] = useState({
@@ -21,16 +25,17 @@ const Login = (props) => {
         event.preventDefault();
         const result = await axios.post("http://localhost:5000/api/auth/login",form)
                                 .then(response=>{
-                                    console.log(response);
                                 if (response.data.status===200) {
-                                    alert("Ha iniciado correctamente");
+                                    localStorage.setItem("token",response.data.body.token);
+                                    localStorage.setItem("user",JSON.stringify(response.data.body.info));
+                                    toastr.success('Ha iniciado sesión correctamente', 'Bienvenido');
                                     props.history.push("/ticket");
                                 }
                                 else {
-                                    alert("Hubo un error");
+                                    toastr.error('Hubo un error, vuelva a intentarlo')
                                 }
                                 }).catch(error=>{
-                                    alert("Error 34 "+error)
+                                    toastr.error("Información Inválida")
                                 });
         
     }

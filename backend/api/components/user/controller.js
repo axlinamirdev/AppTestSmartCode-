@@ -26,7 +26,7 @@ module.exports =(injectedStore) => {
         }
 
         if (body.pass) {
-            user.pass = await bcrypt.hash(data.pass, 5);
+            user.pass = await bcrypt.hash(body.pass, 5);
         }
 
         return store.postinsert(TABLA, user);

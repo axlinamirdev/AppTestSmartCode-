@@ -88,7 +88,7 @@ const update = (table, data) => {
 const query = (table, query) => {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT * FROM ${table} WHERE ?`, query, (err, res) => {
-			console.log(res);
+			//console.log(res);
             if (err) return reject(err);
             resolve(res[0] || null);
         })

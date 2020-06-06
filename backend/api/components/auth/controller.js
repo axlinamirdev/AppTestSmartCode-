@@ -13,13 +13,18 @@ module.exports = function (injectedStore) {
 
         if (await bcrypt.compare(pass, data.pass)) {
             delete data.pass
-            return auth.sign(data)
+            const token = auth.sign(data);
+            delete data.mail
+            const user = {
+                info:{...data},
+                token
+            };
+            return user;
           } else {
-            thrownewError('Invalid information')
+            throw new Error('Información Inválida')
           }
     }
 
-    
 
     return {
         login
