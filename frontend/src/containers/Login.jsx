@@ -1,16 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../assets/images/brand/bootstrap-solid.svg";
 import "../assets/css/login.css";
 import {Link }from "react-router-dom";
+import axios from "axios";
 
 const Login = (props) => {
-    const handleSubmit = () => {
-        props.history.push("/ticket");
+
+    const [form, setForm ] = useState({
+        mail:'',
+        pass:''
+    });
+
+    const handleChange = event => {
+        setForm({
+            ...form,
+            [event.target.name]:event.target.value
+        })
+    }
+    const handleSubmit =async (event) => {
+        event.preventDefault();
+        const result = await axios.post("http://localhost:5000/api/auth/login",form)
+                                .then(response=>{
+                                    console.log(response);
+                                if (response.data.status===200) {
+                                    alert("Ha iniciado correctamente");
+                                    props.history.push("/ticket");
+                                }
+                                else {
+                                    alert("Hubo un error");
+                                }
+                                }).catch(error=>{
+                                    alert("Error 34 "+error)
+                                });
+        
     }
 
     return(
-        <div class="card form-signin" >
-            <div class="card-body">
+        <div className="card form-signin" >
+            <div className="card-body">
                 <form onSubmit={handleSubmit}>
                     <div className="text-center mb-4">
                         <img className="mb-4" src={logo} alt="" width="72" height="72" />
@@ -19,12 +46,12 @@ const Login = (props) => {
                     </div>
 
                     <div className="form-label-group">
-                        <input type="email" id="mail" className="form-control" placeholder="Usuario" required autoFocus />
+                        <input type="email" id="mail" name="mail" className="form-control" placeholder="Usuario" onChange={handleChange} required autoFocus />
                         <label htmlFor="mail">Usuario</label>
                     </div>
 
                     <div className="form-label-group">
-                        <input type="password" id="pass" className="form-control" placeholder="Contraseña" required />
+                        <input type="password" id="pass" name="pass" className="form-control" placeholder="Contraseña" onChange={handleChange} required />
                         <label htmlFor="pass">Contraseña</label>
                     </div>
 

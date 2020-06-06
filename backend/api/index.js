@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const config = require("../config.js");
 const user = require("./components/user/network");
 const auth = require("./components/auth/network");
+const ticket = require("./components/ticket/network");
 const errors = require("../network/error.js");
 
 const app = express();
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 
 app.use("/api/user", user);
 app.use("/api/auth", auth);
+app.use("/api/ticket", ticket);
 
 app.use(errors);
 

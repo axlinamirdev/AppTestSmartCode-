@@ -13,7 +13,7 @@ const list = (req, res) => {
 		.then((lista) => {
 			response.success(req, res, lista, 200);
 		})
-		.catch((error) =>{
+		.catch((err) =>{
 			response.error(req, res, err.message, 500);
 		});
     ;

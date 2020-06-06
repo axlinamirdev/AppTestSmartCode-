@@ -4,13 +4,16 @@ const config = require('../config');
 const secret = config.jwt.secret;
 
 const sign = (data) => {
-    return jwt.sign(data, secret);
+    return jwt.sign({data},secret,{expiresIn:30});
 }
 
 const verify = (token) =>{
     return jwt.verify(token, secret)
 }
 
+const destruir = (token) => {
+    return jwtr.destroy(token);
+}
 
 const getToken = (auth) => {
     if (!auth) {
@@ -49,4 +52,5 @@ const check = {
 module.exports = {
     sign,
     check,
+    destruir
 };

@@ -1,4 +1,3 @@
-const auth = require("../auth/index.js");
 const bcrypt = require("bcrypt");
 
 const TABLA ="usuario";
@@ -21,13 +20,13 @@ module.exports =(injectedStore) => {
 	const postinsert= async (body) => {
 
         const user = {
-            id_tipouser: body.id_tipouser,
+            id_tipouser: 1,
             nombre: body.nombre,
             mail: body.mail,
         }
 
         if (body.pass) {
-            user.pass = await bcrypt.hash(body.pass, 5);
+            user.pass = await bcrypt.hash(data.pass, 5);
         }
 
         return store.postinsert(TABLA, user);
@@ -38,6 +37,7 @@ module.exports =(injectedStore) => {
 	/**const delete = (id) => {
 		return store.update(TABLA, id);
 	}**/
+
 
 	return { 
 		list,
