@@ -20,12 +20,17 @@ module.exports =(injectedStore) => {
 
        return store.postinsert(TABLA, ticket);        
     };
+
+    const listaTicket = () => {
+		return store.listaTicket(TABLA);
+    }
     
 
 
 	return { 
         listaTicketAsignado,
-        solicitarTicket
+        solicitarTicket,
+        listaTicket
 	};
 }
 

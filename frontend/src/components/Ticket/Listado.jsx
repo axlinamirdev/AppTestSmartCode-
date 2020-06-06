@@ -1,7 +1,10 @@
 import React from "react";
 import Layout from "../Layout";
+import useListadoTicket from "../../hooks/useListadoTicket";
 
 const Listado = () => {
+    const initialTicket = useListadoTicket();
+
     return(
         <table className="table">
         <thead className="thead-dark">
@@ -13,36 +16,20 @@ const Listado = () => {
             </tr>
         </thead>
         <tbody>
-            <tr>
-            <th scope="row">1</th>
-            <td>CAROLINA PEREZ</td>
-            <td>4</td>
-            <td>
-                <button className="btn btn-warning btn-sm mr-2" type="submit">Detalle</button>
-                <button className="btn btn-success btn-sm mr-2" type="submit">Editar</button>
-                <button className="btn btn-danger btn-sm" type="submit">Eliminar</button>
-            </td>
-            </tr>
-            <tr>
-            <th scope="row">2</th>
-            <td>JOSE ANAYA</td>
-            <td>2</td>
-            <td>
-                <button className="btn btn-warning btn-sm mr-2" type="submit">Detalle</button>
-                <button className="btn btn-success btn-sm mr-2" type="submit">Editar</button>
-                <button className="btn btn-danger btn-sm" type="submit">Eliminar</button>
-            </td>
-            </tr>
-            <tr>
-            <th scope="row">3</th>
-            <td>ISIS VELA</td>
-            <td>6</td>
-            <td>
-                <button className="btn btn-warning btn-sm mr-2" type="submit">Detalle</button>
-                <button className="btn btn-success btn-sm mr-2" type="submit">Editar</button>
-                <button className="btn btn-danger btn-sm" type="submit">Eliminar</button>
-            </td>
-            </tr>
+            {
+                initialTicket.map((item,index) => 
+                    <tr key={index}>
+                        <th scope="row">{item.id}</th>
+                        <td>{item.nombre}</td>
+                        <td>{item.ticket_pedido}</td>
+                        <td>
+                            <button className="btn btn-warning btn-sm mr-2" type="submit">Detalle</button>
+                            <button className="btn btn-success btn-sm mr-2" type="submit">Editar</button>
+                            <button className="btn btn-danger btn-sm" type="submit">Eliminar</button>
+                        </td>
+                    </tr>
+                )
+            }
         </tbody>
         </table>
     );

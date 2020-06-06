@@ -105,10 +105,21 @@ const rowMultiple = (table, query) => {
     })
 }
 
+const listaTicket = (table) => {
+	return new Promise((resolve, reject) => {
+		connection.query(`SELECT ticket.id, usuario.nombre, ticket.ticket_pedido FROM ticket INNER JOIN usuario ON ticket.id_user = usuario.id `,(err, data) =>{
+			if(err) return reject(err);
+
+			resolve(data);
+		});
+	});
+}
+
 module.exports = {
 	list,
 	get,
 	postinsert,
 	query,
-	rowMultiple
+	rowMultiple,
+	listaTicket
 }
