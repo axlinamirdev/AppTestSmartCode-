@@ -1,44 +1,73 @@
-import React from "react";
-import Layout from "../Layout";
+import React, { useState } from "react";
 import useListadoTicket from "../../hooks/useListadoTicket";
 import axios from "axios";
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
+import Toastr from 'toastr2';
+
+const toastr = new Toastr();
 
 const Listado = () => {
-    const initialTicket = useListadoTicket();
+     const initialTicket = useListadoTicket();
+     
+     const [ticket, setTicket]=useState({});
 
-    const handleClickAsignar = async (id) => {
+    const handleClickAsignar =  (id) => {
         const data = {
             id: id,
             ticket_pedido: 1
         }
+        Swal.fire({
+            title: '¿Desea asignar el ticket?',
+            icon: 'question',
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+          }).then((result) => {
+            if (result.value) {
+                const result = axios.put("http://localhost:5000/api/ticket",data)
+                    .then(response=>{
+                        if (response.data.status===200) {
+                            toastr.success('Se ha asignado el ticket');
 
-        const result = await axios.put("http://localhost:5000/api/ticket",data)
-                                .then(response=>{
-                                if (response.data.status===200) {
-                                    alert("Se ha asignado el ticket");
-                                }
-                                else {
-                                    alert("Hubo un error");
-                                }
-                                }).catch(error=>{
-                                    alert("Error 34 "+error)
-                                });
+                        }
+                        else {
+                            toastr.warning("Hubo un error al asignar el ticket");
+                        }
+                    }).catch(error=>{
+                        toastr.error("Hubo un error");
+                    });
+            }
+          })
+        
     }
 
-    const handleClickEliminar = async (id) => {
-        const data ={id};
-        const result = await axios.post("http://localhost:5000/api/ticket/delete",data)
-                                .then(response=>{
-                                if (response.data.status===200) {
-                                    alert("Se ha eliminado el ticket");
-                                }
-                                else {
-                                    alert("Hubo un error");
-                                }
-                                }).catch(error=>{
-                                    alert("Error 34 "+error)
-                                });
-
+    const handleClickEliminar =  (id) => {
+        
+        Swal.fire({
+            title: '¿Desea eliminar el ticket?',
+            icon: 'question',
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+          }).then((result) => {
+            if (result.value) {
+                const result =  axios.post("http://localhost:5000/api/ticket/delete",{id})
+                            .then(response=>{
+                            if (response.data.status===200) {
+                                alert("");
+                                toastr.success('Se ha eliminado el ticket');
+                            }
+                            else {
+                                alert("Hubo un error al eliminar el ticket");
+                            }
+                            }).catch(error=>{
+                                toastr.error("Hubo un error");
+                            });
+            }
+          })
     }
 
     return(

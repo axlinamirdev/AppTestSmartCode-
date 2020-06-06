@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Login from "../containers/Login";
-import TicketUsuario from "../containers/TicketUsuario";
+import PerfilAdmin from "../containers/PerfilAdmin";
 import Register from "../containers/Register";
 import TicketAsignado from "../containers/TicketAsignado";
 
@@ -11,7 +11,7 @@ const App = () => (
         <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/ticket" component={TicketUsuario} />
+            <Route exact path="/ticket" component={PerfilAdmin} />
             <Route exact path="/listado" component={TicketAsignado} />
         </Switch>
     </BrowserRouter>

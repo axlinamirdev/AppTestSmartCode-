@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import useGetNombre from "../hooks/useGetNombre";
 
 const Menu = () => {
+    const nombre = useGetNombre();
+    
     return(
         <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <a className="navbar-brand" href="#">App SmartCode</a>
@@ -18,6 +21,9 @@ const Menu = () => {
                 </li>
                 </ul>
                 <ul className="navbar-nav ml-auto">
+                    <li>
+                        <p className="text-white pt-2 pr-5">{nombre}</p>
+                    </li>
                     <li>
                         <Link className="btn btn-secondary" to="/">
                             Cerrar Sesión
