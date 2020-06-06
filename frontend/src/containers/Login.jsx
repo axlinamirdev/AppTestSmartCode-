@@ -26,10 +26,15 @@ const Login = (props) => {
         const result = await axios.post("http://localhost:5000/api/auth/login",form)
                                 .then(response=>{
                                 if (response.data.status===200) {
-                                    localStorage.setItem("token",response.data.body.token);
-                                    localStorage.setItem("user",JSON.stringify(response.data.body.info));
+                                    const dataUser = response.data.body;
+                                    localStorage.setItem("token",dataUser.token);
+                                    localStorage.setItem("user",JSON.stringify(dataUser.info));
                                     toastr.success('Ha iniciado sesión correctamente', 'Bienvenido');
-                                    props.history.push("/ticket");
+                                    if(dataUser.id_tipouser==1){ //Administrador
+                                        props.history.push("/ticket");
+                                    }else{ //usuario
+                                        props.history.push("/listado");
+                                    }
                                 }
                                 else {
                                     toastr.error('Hubo un error, vuelva a intentarlo')

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import Listado from "../components/Ticket/Listado";
 
+
 const PerfilAdmin = () => {
     
     return(

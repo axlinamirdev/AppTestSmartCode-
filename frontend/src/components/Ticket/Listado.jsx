@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useListadoTicket from "../../hooks/useListadoTicket";
 import axios from "axios";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-
+import authHeader from '../../services/userservice.js';
 import Toastr from 'toastr2';
 
 const toastr = new Toastr();
@@ -26,11 +26,10 @@ const Listado = () => {
             cancelButtonText: 'No'
           }).then((result) => {
             if (result.value) {
-                const result = axios.put("http://localhost:5000/api/ticket",data)
+                const result = axios.put("http://localhost:5000/api/ticket",data, { headers: authHeader() })
                     .then(response=>{
                         if (response.data.status===200) {
                             toastr.success('Se ha asignado el ticket');
-
                         }
                         else {
                             toastr.warning("Hubo un error al asignar el ticket");
@@ -54,10 +53,9 @@ const Listado = () => {
             cancelButtonText: 'No'
           }).then((result) => {
             if (result.value) {
-                const result =  axios.post("http://localhost:5000/api/ticket/delete",{id})
+                const result =  axios.post("http://localhost:5000/api/ticket/delete",{id}, { headers: authHeader() })
                             .then(response=>{
                             if (response.data.status===200) {
-                                alert("");
                                 toastr.success('Se ha eliminado el ticket');
                             }
                             else {
