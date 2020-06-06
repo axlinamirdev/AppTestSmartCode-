@@ -13,13 +13,6 @@ const Menu = () => {
             </button>
 
             <div className="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
-                    <Link className="nav-link" to="/ticket">
-                        Ticket <span className="sr-only">(current)</span>
-                    </Link>
-                </li>
-                </ul>
                 <ul className="navbar-nav ml-auto">
                     <li>
                         <p className="text-white pt-2 pr-5">{nombre}</p>

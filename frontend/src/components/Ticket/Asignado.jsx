@@ -1,28 +1,46 @@
 import React from "react";
 import useListaTicket from "../../hooks/useListaTicketAsignado";
-import { useState } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Toastr from 'toastr2';
+
+const toastr = new Toastr();
 
 const Asignado = () => {
     const initialTicket = useListaTicket(26);
     
     const handleClick = async () => {
+        
+        const usuario = JSON.parse(localStorage.getItem('user'));
+
         const data ={
-            id_user:26,
-            ticket_pedido:0
+            id_user:usuario.id,
+            ticket_pedido: 0
         };
 
-        const result = await axios.post("http://localhost:5000/api/ticket",data)
-                                .then(response=>{
-                                if (response.data.status===200) {
-                                    alert("Ha realizado la solicitud");
-                                }
-                                else {
-                                    alert("Hubo un error");
-                                }
-                                }).catch(error=>{
-                                    alert("Error 34 "+error)
-                                });
+        Swal.fire({
+            title: '¿Desea solicitar un ticket?',
+            icon: 'question',
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+          }).then((result) => {
+            if (result.value) {
+                const result = axios.post("http://localhost:5000/api/ticket",data)
+                    .then(response=>{
+                        if (response.data.status===200) {
+                            toastr.success('Ha realizado la solicitud');
+
+                        }
+                        else {
+                            toastr.warning("Hubo un error al solicitar el ticket");
+                        }
+                    }).catch(error=>{
+                        toastr.error("Hubo un error");
+                    });
+            }
+          })
     }
 
     return (
