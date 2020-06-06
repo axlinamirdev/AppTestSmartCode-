@@ -22,15 +22,25 @@ module.exports =(injectedStore) => {
     };
 
     const listaTicket = () => {
-		return store.listaTicket(TABLA);
+		  return store.listaTicket(TABLA);
     }
+
+    const asignarTicket = async (body) => {
+      const ticket = {
+          id: body.id,
+          ticket_pedido: 1,
+      }
+
+     return store.postinsert(TABLA, ticket);        
+  };
     
 
 
 	return { 
         listaTicketAsignado,
         solicitarTicket,
-        listaTicket
+        listaTicket,
+        asignarTicket
 	};
 }
 

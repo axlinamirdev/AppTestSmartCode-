@@ -1,9 +1,29 @@
 import React from "react";
 import Layout from "../Layout";
 import useListadoTicket from "../../hooks/useListadoTicket";
+import axios from "axios";
 
 const Listado = () => {
     const initialTicket = useListadoTicket();
+
+    const handleClickAsignar = async (id) => {
+        const data = {
+            id: id,
+            ticket_pedido: 1
+        }
+
+        const result = await axios.put("http://localhost:5000/api/ticket",data)
+                                .then(response=>{
+                                if (response.data.status===200) {
+                                    alert("Se ha asignado el ticket");
+                                }
+                                else {
+                                    alert("Hubo un error");
+                                }
+                                }).catch(error=>{
+                                    alert("Error 34 "+error)
+                                });
+    }
 
     return(
         <table className="table">
@@ -23,9 +43,9 @@ const Listado = () => {
                         <td>{item.nombre}</td>
                         <td>{item.ticket_pedido}</td>
                         <td>
-                            <button className="btn btn-warning btn-sm mr-2" type="submit">Detalle</button>
-                            <button className="btn btn-success btn-sm mr-2" type="submit">Editar</button>
-                            <button className="btn btn-danger btn-sm" type="submit">Eliminar</button>
+                            <button className="btn btn-warning btn-sm mr-2" type="button" onClick={() => handleClickAsignar(item.id)}>Asignar</button>
+                            <button className="btn btn-success btn-sm mr-2" type="button">Editar</button>
+                            <button className="btn btn-danger btn-sm" type="button">Eliminar</button>
                         </td>
                     </tr>
                 )
