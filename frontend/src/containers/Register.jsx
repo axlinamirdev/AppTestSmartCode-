@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../assets/images/brand/bootstrap-solid.svg";
+import logo from "../assets/images/react-node.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import useRole from "../hooks/useRole";
@@ -25,7 +25,7 @@ const Register = (props) => {
             return;
         }
         if(data.pass !== data.repPass){
-            console.log("Las claves deben ser iguales");
+            toastr.error("Las claves deben ser iguales")
         }else{
             const result = await axios.post("http://localhost:5000/api/user",data)
                             .then(response=>{
@@ -55,7 +55,7 @@ const Register = (props) => {
                 <div className="card-body">
                     <form onSubmit={handleSubmit}>
                         <div className="text-center mb-4">
-                            <img className="mb-4" src={logo} alt="" width="72" height="72" />
+                            <img className="mb-4" src={logo} alt="" width="200" height="150" />
                             <h1 className="h3 mb-3 font-weight-normal">Registro de Usuario</h1>
                             <p>App Reactjs + Nodejs + MySql </p>
                         </div>

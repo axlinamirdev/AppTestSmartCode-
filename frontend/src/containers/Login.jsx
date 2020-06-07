@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../assets/images/brand/bootstrap-solid.svg";
+import logo from "../assets/images/react-node.png";
 import "../assets/css/login.css";
 import {Link }from "react-router-dom";
 import axios from "axios";
@@ -51,7 +51,7 @@ const Login = (props) => {
             <div className="card-body">
                 <form onSubmit={handleSubmit}>
                     <div className="text-center mb-4">
-                        <img className="mb-4" src={logo} alt="" width="72" height="72" />
+                        <img className="mb-4" src={logo} alt="" width="200" height="150" />
                         <h1 className="h3 mb-3 font-weight-normal">App SmartCode</h1>
                         <p>App Reactjs + Nodejs + MySql </p>
                     </div>

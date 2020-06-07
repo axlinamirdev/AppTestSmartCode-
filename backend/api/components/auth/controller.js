@@ -9,20 +9,25 @@ module.exports = function (injectedStore) {
     }
     //Función para verificar el email y password
     const login = async (mail, pass) => {
+        
     	const data = await store.query(TABLA, { mail: mail });
-
-        if (await bcrypt.compare(pass, data.pass)) {
-            delete data.pass
-            const token = auth.sign(data);
-            delete data.mail
-            const user = {
-                info:{...data},
-                token
-            };
-            return user;
-          } else {
+        if(data!==null)
+        {
+            if (await bcrypt.compare(pass, data.pass)) {
+                delete data.pass
+                const token = auth.sign(data);
+                delete data.mail
+                const user = {
+                    info:{...data},
+                    token
+                };
+                return user;
+              } else {
+                throw new Error('Información Inválida')
+              }
+        }else{
             throw new Error('Información Inválida')
-          }
+        }        
     }
 
     return {
