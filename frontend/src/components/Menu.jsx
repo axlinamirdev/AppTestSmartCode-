@@ -3,7 +3,7 @@ import { withRouter } from "react-router";
 import useGetNombre from "../hooks/useGetNombre";
 
 const Menu = (props) => {
-    const nombre = useGetNombre();
+    const data = useGetNombre();
     
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -13,7 +13,9 @@ const Menu = (props) => {
 
     return(
         <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a className="navbar-brand" href="#">App SmartCode</a>
+            <a className="navbar-brand" href="#">
+                App SmartCode - Perfil { (parseInt(data.perfil)==1) ? "Administrador" : "Usuario" }
+            </a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
@@ -21,7 +23,7 @@ const Menu = (props) => {
             <div className="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul className="navbar-nav ml-auto">
                     <li>
-                        <p className="text-white pt-2 pr-5">{nombre}</p>
+                        <p className="text-white pt-2 pr-5">{data.nombre}</p>
                     </li>
                     <li>
                         <button className="btn btn-secondary" onClick={handleLogout}>
