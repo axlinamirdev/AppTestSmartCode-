@@ -11,9 +11,6 @@ const app = express();
 
 app.use(bodyParser.json());
 
-//Se define las rutas
-
-
 // Configurar cabeceras y cors
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -22,7 +19,7 @@ app.use((req, res, next) => {
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
-
+//Se define las rutas
 app.use("/api/user", user);
 app.use("/api/auth", auth);
 app.use("/api/ticket", ticket);

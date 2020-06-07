@@ -78,7 +78,6 @@ const listAll = (table) => {
 const rowMultiple = (table, query) => {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT * FROM ${table} WHERE ?`, query, (err, res) => {
-			console.log(res);
             if (err) return reject(err);
             resolve(res || null);
         })
@@ -89,7 +88,6 @@ const rowMultiple = (table, query) => {
 const query = (table, query) => {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT * FROM ${table} WHERE ?`, query, (err, res) => {
-			//console.log(res);
             if (err) return reject(err);
             resolve(res[0] || null);
         })
