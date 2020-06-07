@@ -6,24 +6,27 @@ module.exports =(injectedStore) => {
 	if(!store){
 		store = require("../../../store/mysql.js");
 	}
-
-	const listaTicketAsignado = (id_user) => {
+//Visualiza todos los ticket que tiene un usuario
+const listTickerForUser = (id_user) => {
 		return store.rowMultiple(TABLA,  { id_user: id_user });
+}
+// Solicitar un ticket
+const applyForTicket = async (body) => {
+    const ticket = {
+        id_user: body.id_user,
+        ticket_pedido: 0,
     }
-    
-    const solicitarTicket = async (body) => {
-
-        const ticket = {
-            id_user: body.id_user,
-            ticket_pedido: 0,
-        }
-
-       return store.postinsert(TABLA, ticket);        
-    };
-
-    const listaTicket = () => {
-		  return store.listaTicket(TABLA);
-    }
+    return store.register(TABLA, ticket);        
+};
+//Visualiza todos los ticket
+const listAllTicket = () => {
+        return store.listTicket(TABLA);
+}
+//Función para eliminar un ticket
+const deleteTicket = async (body) => {
+    const { id } = body;
+    return store.deleteData(TABLA, id);
+}
 
     const asignarTicket = async (body) => {
         const ticket = {
@@ -34,19 +37,16 @@ module.exports =(injectedStore) => {
       return store.postinsert(TABLA, ticket);        
     };
 
-    const eliminar = async (body) => {
-      const { id } = body;
-      return store.eliminar(TABLA, id);
-    }
+    
     
 
 
 	return { 
-        listaTicketAsignado,
-        solicitarTicket,
-        listaTicket,
+        listTickerForUser,
+        applyForTicket,
+        listAllTicket,
+        deleteTicket,
         asignarTicket,
-        eliminar
 	};
 }
 

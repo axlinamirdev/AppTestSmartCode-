@@ -7,7 +7,7 @@ module.exports = function (injectedStore) {
     if (!store) {
         store = require('../../../store/mysql');
     }
-
+    //Función para verificar el email y password
     const login = async (mail, pass) => {
     	const data = await store.query(TABLA, { mail: mail });
 
@@ -24,7 +24,6 @@ module.exports = function (injectedStore) {
             throw new Error('Información Inválida')
           }
     }
-
 
     return {
         login

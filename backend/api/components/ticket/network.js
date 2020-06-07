@@ -5,37 +5,49 @@ const Controller = require("./index.js");
 
 const router = express.Router();
 
-const lista = (req, res) => {
+//Función para visualizar los ticket que tiene asignado un usuario
+const listAssigned = (req, res) => {
     //response.send('Todo correcto');
-    Controller.listaTicketAsignado(req.params.id)
+    Controller.listTickerForUser(req.params.id)
     	.then(ticket =>{
-    		response.success(req, res, ticket, 200);
+			res.json({"respuesta":true, ticket});
     	})
     	.catch((err) => {
-    		response.error(req, res, err.message, 500);
+    		res.json({"message":"Hubo un error en el servidor"});
     	});
     ;
 };
-
-const solicitar = (req, res) => {
-    Controller.solicitarTicket(req.body)
+//Función para solicitar un ticket
+const applyFor = (req, res) => {
+    Controller.applyForTicket(req.body)
     	.then(user =>{
-    		response.success(req, res, user, 200);
+			res.json({"respuesta":true, user});
     	})
     	.catch((err) => {
-    		response.error(req, res, err.message, 500);
+    		res.json({"message":"Hubo un error en el servidor"});
     	});
 };
-
-const listado = (req, res) => {
+//Función para visualizar todos los ticket
+const listTicket = (req, res) => {
     //response.send('Todo correcto');
-    Controller.listaTicket()
+    Controller.listAllTicket()
 		.then((lista) => {
-			response.success(req, res, lista, 200);
+			res.json({"respuesta":true, lista});
 		})
 		.catch((err) =>{
-			response.error(req, res, err.message, 500);
+			res.json({"message":"Hubo un error en el servidor"});
 		});
+    ;
+};
+//Función para eliminar
+const deleteTicket = (req, res) => {
+    Controller.deleteTicket(req.body)
+    	.then(ticket =>{
+			res.json({"respuesta":true, ticket});
+    	})
+    	.catch((err) => {
+    		res.json({"message":"Hubo un error en el servidor"});
+    	});
     ;
 };
 
@@ -51,24 +63,11 @@ const update = (req, res) => {
 };
 
 
-const eliminar = (req, res) => {
-    //response.send('Todo correcto');
-    Controller.eliminar(req.body)
-    	.then(ticket =>{
-    		response.success(req, res, ticket, 200);
-    	})
-    	.catch((err) => {
-    		response.error(req, res, err.message, 500);
-    	});
-    ;
-};
-
-
-router.get("/:id", lista);
-router.post("/", solicitar);
-router.get("/", listado);
+router.get("/:id", listAssigned);
+router.post("/", applyFor);
+router.get("/", listTicket);
 router.put("/", update);
-router.post("/delete", eliminar);
+router.post("/delete", deleteTicket);
 
 
 module.exports = router;

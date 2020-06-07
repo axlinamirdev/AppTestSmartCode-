@@ -7,12 +7,11 @@ import Toastr from 'toastr2';
 const toastr = new Toastr();
 
 const Asignado = () => {
-    const initialTicket = useListaTicket(26);
+    const usuario = JSON.parse(localStorage.getItem('user'));
+
+    const initialTicket = useListaTicket(usuario.id);
     
     const handleClick = async () => {
-        
-        const usuario = JSON.parse(localStorage.getItem('user'));
-
         const data ={
             id_user:usuario.id,
             ticket_pedido: 0
@@ -29,12 +28,11 @@ const Asignado = () => {
             if (result.value) {
                 const result = axios.post("http://localhost:5000/api/ticket",data)
                     .then(response=>{
-                        if (response.data.status===200) {
+                        if (response.data.respuesta===true) {
                             toastr.success('Ha realizado la solicitud');
-
                         }
                         else {
-                            toastr.warning("Hubo un error al solicitar el ticket");
+                            toastr.error("Hubo un error al solicitar el ticket");
                         }
                     }).catch(error=>{
                         toastr.error("Hubo un error");
@@ -61,11 +59,17 @@ const Asignado = () => {
                         </thead>
                         <tbody className="text-center">
                             {
-                                initialTicket.map((item, index) => 
-                                    <tr key={index}>
-                                        <th scope="row">{item.id}</th>
+                                (initialTicket===null) ?
+                                    initialTicket?.map((item, index) => 
+                                        <tr key={index}>
+                                            <td scope="row">{item.id}</td>
+                                        </tr>
+                                    )
+                                :
+                                    <tr>
+                                        <td>No tiene ticket asignado</td>
                                     </tr>
-                                )
+                                                                
                             }
                         </tbody>
                     </table>

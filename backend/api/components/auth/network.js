@@ -1,17 +1,15 @@
 const express = require('express');
-
-const response = require('../../../network/response');
 const Controller = require("./index.js");
 
 const router = express.Router();
-
+//Verificar el login del usuario
 router.post("/login", (req, res) => {
 	Controller.login(req.body.mail, req.body.pass)
 		.then((token) => {
-			response.success(req, res, token, 200);
+			res.json({"respuesta":true, token});
 		})
 		.catch((err) =>{
-			response.error(req, res, err.message, 403);
+			res.json({"error":err.message});
 		});
 });
 module.exports = router;

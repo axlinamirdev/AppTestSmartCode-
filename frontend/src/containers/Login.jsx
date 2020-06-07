@@ -25,8 +25,8 @@ const Login = (props) => {
         event.preventDefault();
         const result = await axios.post("http://localhost:5000/api/auth/login",form)
                                 .then(response=>{
-                                if (response.data.status===200) {
-                                    const dataUser = response.data.body;
+                                if (response.data.respuesta===true) {
+                                    const dataUser = response.data.token;
                                     localStorage.setItem("token",dataUser.token);
                                     localStorage.setItem("user",JSON.stringify(dataUser.info));
                                     toastr.success('Ha iniciado sesión correctamente', 'Bienvenido');

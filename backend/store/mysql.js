@@ -74,29 +74,7 @@ const listAll = (table) => {
 		});
 	});
 }
-
-const get = (table, id) => {
-	return new Promise((resolve, reject) => {
-		connection.query(`SELECT * FROM ${table} WHERE id=${id}`,(err, data) =>{
-			if(err) return reject(err);
-
-			resolve(data);
-		});
-	});
-}
-
-
-
-const query = (table, query) => {
-    return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM ${table} WHERE ?`, query, (err, res) => {
-			//console.log(res);
-            if (err) return reject(err);
-            resolve(res[0] || null);
-        })
-    })
-}
-
+//Función que permite obtener varias filas dependiendo de una condición
 const rowMultiple = (table, query) => {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT * FROM ${table} WHERE ?`, query, (err, res) => {
@@ -107,7 +85,18 @@ const rowMultiple = (table, query) => {
     })
 }
 
-const listaTicket = (table) => {
+//Función para seleccionar por campos en especifico pero solo trae un registro
+const query = (table, query) => {
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT * FROM ${table} WHERE ?`, query, (err, res) => {
+			//console.log(res);
+            if (err) return reject(err);
+            resolve(res[0] || null);
+        })
+    })
+}
+//Función visualiza todos los ticket
+const listTicket = (table) => {
 	return new Promise((resolve, reject) => {
 		connection.query(`SELECT ticket.id, usuario.nombre, ticket.ticket_pedido FROM ticket INNER JOIN usuario ON ticket.id_user = usuario.id `,(err, data) =>{
 			if(err) return reject(err);
@@ -116,8 +105,8 @@ const listaTicket = (table) => {
 		});
 	});
 }
-
-const eliminar = (table, id) => {
+//Función para eliminar un registro
+const deleteData = (table, id) => {
 	return new Promise((resolve, reject) => {
 		connection.query(`DELETE FROM ${table} WHERE id=?`, id, (err, result) =>{
 			if(err) return reject(err);
@@ -126,13 +115,20 @@ const eliminar = (table, id) => {
 		});
 	});
 }
+const get = (table, id) => {
+	return new Promise((resolve, reject) => {
+		connection.query(`SELECT * FROM ${table} WHERE id=${id}`,(err, data) =>{
+			if(err) return reject(err);
 
+			resolve(data);
+		});
+	});
+}
 module.exports = {
 	register,
 	listAll,
-	get,
-	query,
 	rowMultiple,
-	listaTicket,
-	eliminar
+	query,
+	listTicket,
+	deleteData
 }

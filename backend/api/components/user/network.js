@@ -15,7 +15,6 @@ const signup = (req, res) => {
 				res.json({"respuesta":false, "message":"El e-mail ya existe en el sistema"});
 			}else{
 				res.json({"respuesta":true, user});
-				response.success(req, res, user, 200);
 			}
     	})
     	.catch((err) => {
