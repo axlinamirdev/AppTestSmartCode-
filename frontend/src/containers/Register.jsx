@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import logo from "../assets/images/brand/bootstrap-solid.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import useRole from "../hooks/useRole";
+import Toastr from 'toastr2';
+const toastr = new Toastr();
 
-const Register = () => {
+const Register = (props) => {
 
+    const listRole = useRole();
+    
     const [data, setData ] = useState({
         nombre:'',
         mail: '',
@@ -15,28 +20,25 @@ const Register = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if(data.nombre==="" || data.mail==="" || data.pass==="" || data.repPass==="" || data.id_tipouser===""){
+            toastr.error("Debe de completar los datos")
+            return;
+        }
         if(data.pass !== data.repPass){
             console.log("Las claves deben ser iguales");
         }else{
             const result = await axios.post("http://localhost:5000/api/user",data)
-                                    .then(response=>{
-                                        console.log(response);
-                                    if (response.data.status===200) {
-                                        alert("Se ha registrado correctamente");
-                                        setData({
-                                            nombre:'',
-                                            mail: '',
-                                            id_tipouser:'',
-                                            pass:'',
-                                            repPass:''
-                                        });
-                                    }
-                                    else {
-                                        alert("Ya existe en el sistema")
-                                    }
-                                    }).catch(error=>{
-                                        alert("Error 34 "+error)
-                                    });
+                            .then(response=>{
+                            if (response.data.respuesta) {
+                                toastr.success('Se ha registrado correctamente, puede iniciar sesión');
+                                props.history.push("/");
+                            }
+                            else {
+                                toastr.error(response.data.message)
+                            }
+                            }).catch(error=>{
+                                toastr.error("Hubo un error con el servidor")
+                            });
         }
     }
 
@@ -69,11 +71,11 @@ const Register = () => {
                             <label htmlFor="id_tipouser">Rol:</label>
                             <select className="form-control" id="id_tipouser" name="id_tipouser"  onChange={handleChange}>
                                 <option>- Seleccione -</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+                                {
+                                    listRole.map((item, index) => 
+                                        <option key={index} value={item.id}>{item.nombre}</option>
+                                    )
+                                }
                             </select>
                         </div>
                         <div className="form-group">

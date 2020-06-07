@@ -16,36 +16,32 @@ module.exports =(injectedStore) => {
 	const get = (id) => {
 		return store.get(TABLA, id);
 	}
-
-	const postinsert= async (body) => {
-
-        const user = {
-            id_tipouser: 1,
-            nombre: body.nombre,
-            mail: body.mail,
-        }
-
-        if (body.pass) {
-            user.pass = await bcrypt.hash(body.pass, 5);
-        }
-
-        return store.postinsert(TABLA, user);
-
-        
+	//Función para registrar un nuevo usuario
+	const register = async (body) => {
+		//Verifica que el email no exista
+		const data = await store.query(TABLA, { mail: body.mail });
+		//Sino existe lo agrego
+		if(data==null)
+		{
+			const user = {
+				id_tipouser: body.id_tipouser,
+				nombre: body.nombre,
+				mail: body.mail,
+			}
+	
+			if (body.pass) {
+				user.pass = await bcrypt.hash(body.pass, 5);
+			}
+	
+			return store.postinsert(TABLA, user);
+		}
+		return false;		
     };
 
-	/**const delete = (id) => {
-		return store.update(TABLA, id);
-	}**/
-
-
 	return { 
+		register,
 		list,
 		get,
-		postinsert
+		
 	};
 }
-
-/**module.exports = {
-	list
-}**/

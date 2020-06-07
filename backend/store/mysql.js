@@ -36,7 +36,36 @@ const handleCon = () => {
 
 handleCon();
 
-const list = (table) => {
+//Función para verificar si existe el id se actualiza o se agrega
+const register = (table,data) => {
+	if(data && data.id){
+		return update(table,data);
+	}else{
+		return insert(table,data);
+	}	
+}
+//Función para agregar un nuevo registro
+const insert = (table, data) => {
+	return new Promise((resolve, reject) => {
+		connection.query(`INSERT INTO ${table} SET ?`, data, (err, result) =>{
+			if(err) return reject(err);
+
+			resolve(result);
+		});
+	});
+}
+//Función para actualizar un registro
+const update = (table, data) => {
+	return new Promise((resolve, reject) => {
+		connection.query(`UPDATE ${table} SET ? WHERE id=?`, [data,data.id], (err, result) =>{
+			if(err) return reject(err);
+
+			resolve(result);
+		});
+	});
+}
+//Función para visualizar todos los registros
+const listAll = (table) => {
 	return new Promise((resolve, reject) => {
 		connection.query(`SELECT * FROM ${table}`,(err, data) =>{
 			if(err) return reject(err);
@@ -56,34 +85,7 @@ const get = (table, id) => {
 	});
 }
 
-const insert = (table, data) => {
-	return new Promise((resolve, reject) => {
-		connection.query(`INSERT INTO ${table} SET ?`, data, (err, result) =>{
-			if(err) return reject(err);
 
-			resolve(result);
-		});
-	});
-}
-
-const postinsert = (table,data) => {
-	if(data && data.id){
-		return update(table,data);
-	}else{
-		return insert(table,data);
-	}	
-}
-
-
-const update = (table, data) => {
-	return new Promise((resolve, reject) => {
-		connection.query(`UPDATE ${table} SET ? WHERE id=?`, [data,data.id], (err, result) =>{
-			if(err) return reject(err);
-
-			resolve(result);
-		});
-	});
-}
 
 const query = (table, query) => {
     return new Promise((resolve, reject) => {
@@ -126,9 +128,9 @@ const eliminar = (table, id) => {
 }
 
 module.exports = {
-	list,
+	register,
+	listAll,
 	get,
-	postinsert,
 	query,
 	rowMultiple,
 	listaTicket,
