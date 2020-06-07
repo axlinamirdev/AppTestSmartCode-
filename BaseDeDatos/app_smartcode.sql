@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-06-2020 a las 07:50:10
+-- Tiempo de generación: 08-06-2020 a las 01:04:49
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -33,7 +33,7 @@ USE `app_smartcode`;
 DROP TABLE IF EXISTS `ticket`;
 CREATE TABLE `ticket` (
   `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
+  `id_user` int(11) DEFAULT NULL,
   `ticket_pedido` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Contiene los datos de los ticket asignados a los usuarios';
 
@@ -43,16 +43,13 @@ CREATE TABLE `ticket` (
 
 INSERT INTO `ticket` (`id`, `id_user`, `ticket_pedido`) VALUES
 (1, 6, 1),
-(2, 6, 1),
-(3, 3, 1),
-(4, 3, 1),
+(2, 6, 0),
+(3, 3, 0),
+(4, 3, 0),
 (5, 3, 0),
 (6, 5, 1),
-(7, 5, 1),
-(8, 5, 0),
-(9, 6, 0),
-(10, 7, 1),
-(12, 7, 0);
+(7, NULL, 2),
+(8, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -133,7 +130,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_usuario`
@@ -146,22 +143,6 @@ ALTER TABLE `tipo_usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `ticket`
---
-ALTER TABLE `ticket`
-  ADD CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_tipouser`) REFERENCES `tipo_usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
