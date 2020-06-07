@@ -47,7 +47,7 @@ const createdTicket = async (body) => {
 const assignedUser = async (body) => {
     const ticket = {
         id: body.id,
-        id_user: 1,
+        id_user: body.id_user,
         ticket_pedido: 1,
     }
     return store.register(TABLA, ticket); 

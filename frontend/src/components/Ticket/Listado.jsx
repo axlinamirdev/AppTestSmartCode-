@@ -252,7 +252,7 @@ const Listado = () => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="id_user">Usuario</label>
-                                <select className="form-control" id="id_user" name="id_user" onChange={handleChange}>
+                                <select className="form-control" id="id_user" name="id_user" value={infoticket.id_user} onChange={handleChange}>
                                     <option>- Seleccione -</option>
                                     {
                                         listuser.map(item => 
