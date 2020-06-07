@@ -1,8 +1,4 @@
 const express = require('express');
-
-const secure = require("./secure.js");
-
-const response = require('../../../network/response');
 const Controller = require("./index.js");
 
 const router = express.Router();
@@ -22,33 +18,7 @@ const signup = (req, res) => {
     	});
 };
 
-const list = (req, res) => {
-    Controller.list()
-		.then((lista) => {
-			response.success(req, res, lista, 200);
-		})
-		.catch((err) =>{
-			response.error(req, res, err.message, 500);
-		});
-    ;
-};
-
-const get = (req, res) => {
-    //response.send('Todo correcto');
-    Controller.get(req.params.id)
-    	.then(user =>{
-    		response.success(req, res, user, 200);
-    	})
-    	.catch((err) => {
-    		response.error(req, res, err.message, 500);
-    	});
-};
 //Ruta para registrar
 router.post("/", signup);
-
-router.get("/", list);
-router.get("/:id", get);
-
-
 
 module.exports = router;

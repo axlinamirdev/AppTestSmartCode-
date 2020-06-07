@@ -1,16 +1,27 @@
-import React, { useState } from "react";
-import useListadoTicket from "../../hooks/useListadoTicket";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import authHeader from '../../services/userservice.js';
 import Toastr from 'toastr2';
 
 const toastr = new Toastr();
 
 const Listado = () => {
-     const initialTicket = useListadoTicket();
-     
-     const [ticket, setTicket]=useState({});
+    const [ ticket, setTicket ] = useState([]);
+
+    useEffect(() => {
+        const fecthData = async () => {
+            const response = await axios.get(`http://localhost:5000/api/ticket`)
+                                .then(res => {
+                                    const data = res.data.lista;
+                                    setTicket(data);
+                                })
+                                .catch(error => {
+                                    console.log(`Hubo un error: ${error.message}`);
+                                });
+        }
+        fecthData();
+      }, []);
+    
 
     const handleClickAsignar =  (id) => {
         const data = {
@@ -26,10 +37,17 @@ const Listado = () => {
             cancelButtonText: 'No'
           }).then((result) => {
             if (result.value) {
-                const result = axios.put("http://localhost:5000/api/ticket",data, { headers: authHeader() })
+                const result = axios.put("http://localhost:5000/api/ticket",data)
                     .then(response=>{
                         if (response.data.respuesta===true) {
                             toastr.success('Se ha asignado el ticket');
+                            const resultado  = ticket.filter(item => {
+                                if(item.id==id) item.ticket_pedido=1;
+                                
+                                return item;
+                            })
+                            
+                            setTicket(resultado);
                         }
                         else {
                             toastr.warning("Hubo un error al asignar el ticket");
@@ -37,6 +55,8 @@ const Listado = () => {
                     }).catch(error=>{
                         toastr.error("Hubo un error");
                     });
+                    
+                    
             }
           })
         
@@ -52,10 +72,12 @@ const Listado = () => {
             cancelButtonText: 'No'
           }).then((result) => {
             if (result.value) {
-                const result =  axios.post("http://localhost:5000/api/ticket/delete",{id}, { headers: authHeader() })
+                const result =  axios.post("http://localhost:5000/api/ticket/delete",{id})
                             .then(response=>{
                             if (response.data.respuesta===true) {
                                 toastr.success('Se ha eliminado el ticket');
+                                const result = ticket.filter(item => item.id !== id);   
+                                setTicket(result);
                             }
                             else {
                                 toastr.error("Hubo un error al eliminar el ticket");
@@ -80,8 +102,8 @@ const Listado = () => {
             </thead>
             <tbody>
                 {
-                    (initialTicket!==undefined) ?
-                        initialTicket.map((item,index) => 
+                    (ticket!==undefined) ?
+                    ticket.map((item,index) => 
                             <tr key={index}>
                                 <th scope="row">{item.id}</th>
                                 <td>{item.nombre}</td>

@@ -10,7 +10,7 @@ const Asignado = () => {
     const usuario = JSON.parse(localStorage.getItem('user'));
 
     const initialTicket = useListaTicket(usuario.id);
-    
+
     const handleClick = async () => {
         const data ={
             id_user:usuario.id,
@@ -59,7 +59,7 @@ const Asignado = () => {
                         </thead>
                         <tbody className="text-center">
                             {
-                                (initialTicket!==undefined) ?
+                                (initialTicket!==undefined && initialTicket.length!==0) ?
                                     initialTicket?.map((item, index) => 
                                         <tr key={index}>
                                             <td scope="row">{item.id}</td>

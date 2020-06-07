@@ -30,9 +30,10 @@ const Login = (props) => {
                                     localStorage.setItem("token",dataUser.token);
                                     localStorage.setItem("user",JSON.stringify(dataUser.info));
                                     toastr.success('Ha iniciado sesión correctamente', 'Bienvenido');
-                                    if(dataUser.id_tipouser==1){ //Administrador
+                                    if(parseInt(dataUser.info.id_tipouser)===1){ //Administrador                                        
                                         props.history.push("/ticket");
                                     }else{ //usuario
+                                        console.log("entro1");
                                         props.history.push("/listado");
                                     }
                                 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useListaUsuario = () => {
+const useGetNombre = () => {
     const [ nombre, setNombre ] = useState("");
     useEffect(()=>{
         const getUser = () => {
@@ -15,4 +15,4 @@ const useListaUsuario = () => {
     return nombre;
 }
 
-export default useListaUsuario;
+export default useGetNombre;
