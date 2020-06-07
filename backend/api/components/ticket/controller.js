@@ -36,12 +36,22 @@ const asignedTicket = async (body) => {
     return store.register(TABLA, ticket);        
 };
 
+//Crear un nuevo ticket
+const createdTicket = async (body) => {
+    const ticket = {
+        id_user: body.id_user,
+        ticket_pedido: body.ticket_pedido,
+    }
+    return store.register(TABLA, ticket);        
+};
+
 return { 
     listTickerForUser,
     applyForTicket,
     listAllTicket,
     deleteTicket,
-    asignedTicket
+    asignedTicket,
+    createdTicket
 };
 }
 

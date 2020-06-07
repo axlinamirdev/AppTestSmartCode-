@@ -8,17 +8,18 @@ const toastr = new Toastr();
 const Listado = () => {
     const [ ticket, setTicket ] = useState([]);
 
+    const fecthData = async () => {
+        const response = await axios.get(`http://localhost:5000/api/ticket`)
+                            .then(res => {
+                                const data = res.data.lista;
+                                setTicket(data);
+                            })
+                            .catch(error => {
+                                console.log(`Hubo un error: ${error.message}`);
+                            });
+    }
+
     useEffect(() => {
-        const fecthData = async () => {
-            const response = await axios.get(`http://localhost:5000/api/ticket`)
-                                .then(res => {
-                                    const data = res.data.lista;
-                                    setTicket(data);
-                                })
-                                .catch(error => {
-                                    console.log(`Hubo un error: ${error.message}`);
-                                });
-        }
         fecthData();
       }, []);
     
@@ -89,44 +90,80 @@ const Listado = () => {
           })
     }
 
+    const handleAddTicket = () => {
+        const data={
+            id_user: null,
+            ticket_pedido: 2
+        }
+        Swal.fire({
+            title: '¿Desea crear un ticket?',
+            icon: 'question',
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+          }).then((result) => {
+            if (result.value) {
+               const result =  axios.post("http://localhost:5000/api/ticket/create", data)
+                            .then(response=>{
+                            if (response.data.respuesta===true) {
+                                toastr.success('Se ha creado el ticket');
+                                fecthData();
+                            }
+                            else {
+                                toastr.error("Hubo un error al crear el ticket");
+                            }
+                            }).catch(error=>{
+                                toastr.error("Hubo un error");
+                            });
+            }
+          })
+    }
 
     return(
-        <table className="table">
-            <thead className="thead-dark">
-                <tr>
-                <th scope="col">Id Ticket</th>
-                <th scope="col">Usuario</th>
-                <th scope="col">Ticket Pedido</th>
-                <th scope="col">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    (ticket!==undefined) ?
-                    ticket.map((item,index) => 
-                            <tr key={index}>
-                                <th scope="row">{item.id}</th>
-                                <td>{item.nombre}</td>
-                                <td>{(item.ticket_pedido==1) ? "Asignado" : "Pendiente"}</td>
-                                <td>
-                                    {
-                                        (item.ticket_pedido==0) ? 
-                                            <>
-                                            <button className="btn btn-warning btn-sm mr-2" type="button" onClick={() => handleClickAsignar(item.id)}>Asignar</button>
-                                            <button className="btn btn-danger btn-sm" type="button" onClick={() => handleClickEliminar(item.id)}>Eliminar</button>
-                                            </>
-                                        : ""
-                                    }
-                                </td>
-                            </tr>
-                    )
-                    : 
+        <>
+            <div className="text-right pb-3">
+                <button className="btn btn-success" onClick={handleAddTicket}>Crear Ticket</button>
+            </div>
+            <div>
+                <table className="table">
+                    <thead className="thead-dark">
                         <tr>
-                            <td>No hay  ticket disponible</td>
+                        <th scope="col">Id Ticket</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Ticket Pedido</th>
+                        <th scope="col">Opciones</th>
                         </tr>
-                }
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        {
+                            (ticket!==undefined) ?
+                            ticket.map((item,index) => 
+                                    <tr key={index}>
+                                        <th scope="row">{item.id}</th>
+                                        <td>{item.nombre}</td>
+                                        <td>{(item.ticket_pedido==1) ? "Asignado" : "Pendiente"}</td>
+                                        <td>
+                                            {
+                                                (item.ticket_pedido==0) ? 
+                                                    <>
+                                                    <button className="btn btn-warning btn-sm mr-2" type="button" onClick={() => handleClickAsignar(item.id)}>Asignar</button>
+                                                    <button className="btn btn-danger btn-sm" type="button" onClick={() => handleClickEliminar(item.id)}>Eliminar</button>
+                                                    </>
+                                                : ""
+                                            }
+                                        </td>
+                                    </tr>
+                            )
+                            : 
+                                <tr>
+                                    <td>No hay  ticket disponible</td>
+                                </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 };
 
