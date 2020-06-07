@@ -46,22 +46,20 @@ const deleteTicket = (req, res) => {
 			res.json({"respuesta":true, ticket});
     	})
     	.catch((err) => {
-    		res.json({"message":"Hubo un error en el servidor"});
+    		
     	});
     ;
 };
-
+//Funcion para asignar el ticket al usuario
 const update = (req, res) => {
-    //response.send('Todo correcto');
-    Controller.asignarTicket(req.body)
+    Controller.asignedTicket(req.body)
     	.then(user =>{
-    		response.success(req, res, user, 200);
+			res.json({"respuesta":true, user});
     	})
     	.catch((err) => {
-    		response.error(req, res, err.message, 500);
+    		res.json({"message":"Hubo un error en el servidor"});
     	});
 };
-
 
 router.get("/:id", listAssigned);
 router.post("/", applyFor);

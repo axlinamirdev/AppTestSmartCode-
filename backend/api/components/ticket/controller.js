@@ -27,26 +27,21 @@ const deleteTicket = async (body) => {
     const { id } = body;
     return store.deleteData(TABLA, id);
 }
+//Asignar ticket
+const asignedTicket = async (body) => {
+    const ticket = {
+        id: body.id,
+        ticket_pedido: 1,
+    }
+    return store.register(TABLA, ticket);        
+};
 
-    const asignarTicket = async (body) => {
-        const ticket = {
-            id: body.id,
-            ticket_pedido: 1,
-        }
-
-      return store.postinsert(TABLA, ticket);        
-    };
-
-    
-    
-
-
-	return { 
-        listTickerForUser,
-        applyForTicket,
-        listAllTicket,
-        deleteTicket,
-        asignarTicket,
-	};
+return { 
+    listTickerForUser,
+    applyForTicket,
+    listAllTicket,
+    deleteTicket,
+    asignedTicket
+};
 }
 

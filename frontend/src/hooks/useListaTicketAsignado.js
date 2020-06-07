@@ -8,7 +8,7 @@ const useListaTicketAsignado = (id_user) => {
         const fecthData = async () => {
             const response = await axios.get(`http://localhost:5000/api/ticket/${id_user}`)
                                 .then(res => {
-                                    const data = res.data.body;
+                                    const data = res.data.ticket;
                                     setTicket(data);
                                 })
                                 .catch(error => {

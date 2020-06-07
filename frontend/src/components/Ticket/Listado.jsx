@@ -28,7 +28,7 @@ const Listado = () => {
             if (result.value) {
                 const result = axios.put("http://localhost:5000/api/ticket",data, { headers: authHeader() })
                     .then(response=>{
-                        if (response.data.status===200) {
+                        if (response.data.respuesta===true) {
                             toastr.success('Se ha asignado el ticket');
                         }
                         else {
@@ -67,6 +67,7 @@ const Listado = () => {
           })
     }
 
+
     return(
         <table className="table">
             <thead className="thead-dark">
@@ -79,15 +80,21 @@ const Listado = () => {
             </thead>
             <tbody>
                 {
-                    (initialTicket===null) ?
+                    (initialTicket!==undefined) ?
                         initialTicket.map((item,index) => 
                             <tr key={index}>
                                 <th scope="row">{item.id}</th>
                                 <td>{item.nombre}</td>
-                                <td>{item.ticket_pedido}</td>
+                                <td>{(item.ticket_pedido==1) ? "Asignado" : "Pendiente"}</td>
                                 <td>
-                                    <button className="btn btn-warning btn-sm mr-2" type="button" onClick={() => handleClickAsignar(item.id)}>Asignar</button>
-                                    <button className="btn btn-danger btn-sm" type="button" onClick={() => handleClickEliminar(item.id)}>Eliminar</button>
+                                    {
+                                        (item.ticket_pedido==0) ? 
+                                            <>
+                                            <button className="btn btn-warning btn-sm mr-2" type="button" onClick={() => handleClickAsignar(item.id)}>Asignar</button>
+                                            <button className="btn btn-danger btn-sm" type="button" onClick={() => handleClickEliminar(item.id)}>Eliminar</button>
+                                            </>
+                                        : ""
+                                    }
                                 </td>
                             </tr>
                     )

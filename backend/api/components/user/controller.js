@@ -8,14 +8,6 @@ module.exports =(injectedStore) => {
 	if(!store){
 		store = require("../../../store/mysql.js");
 	}
-
-	const list = () => {
-		return store.list(TABLA);
-	}
-
-	const get = (id) => {
-		return store.get(TABLA, id);
-	}
 	//Función para registrar un nuevo usuario
 	const register = async (body) => {
 		//Verifica que el email no exista
@@ -39,9 +31,6 @@ module.exports =(injectedStore) => {
     };
 
 	return { 
-		register,
-		list,
-		get,
-		
+		register,	
 	};
 }

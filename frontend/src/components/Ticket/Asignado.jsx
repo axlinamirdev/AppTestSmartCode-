@@ -59,7 +59,7 @@ const Asignado = () => {
                         </thead>
                         <tbody className="text-center">
                             {
-                                (initialTicket===null) ?
+                                (initialTicket!==undefined) ?
                                     initialTicket?.map((item, index) => 
                                         <tr key={index}>
                                             <td scope="row">{item.id}</td>
