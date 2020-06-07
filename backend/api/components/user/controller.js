@@ -33,7 +33,7 @@ module.exports =(injectedStore) => {
 				user.pass = await bcrypt.hash(body.pass, 5);
 			}
 	
-			return store.postinsert(TABLA, user);
+			return store.register(TABLA, user);
 		}
 		return false;		
     };
