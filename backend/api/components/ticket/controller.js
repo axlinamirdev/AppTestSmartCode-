@@ -44,6 +44,14 @@ const createdTicket = async (body) => {
     }
     return store.register(TABLA, ticket);        
 };
+const assignedUser = async (body) => {
+    const ticket = {
+        id: body.id,
+        id_user: 1,
+        ticket_pedido: 1,
+    }
+    return store.register(TABLA, ticket); 
+}
 
 return { 
     listTickerForUser,
@@ -51,7 +59,8 @@ return {
     listAllTicket,
     deleteTicket,
     asignedTicket,
-    createdTicket
+    createdTicket,
+    assignedUser
 };
 }
 

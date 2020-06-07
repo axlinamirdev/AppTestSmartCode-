@@ -24,7 +24,7 @@ const PerfilAdmin = (props) => {
                             <h1>Asignación de Ticket</h1>
                         </div>
                         <div className="row">
-                            <div className="col-8 mx-auto">
+                            <div className="col-12 mx-auto">
                                 <Listado />
                             </div>
                         </div> 

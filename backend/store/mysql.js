@@ -38,6 +38,7 @@ handleCon();
 
 //Función para verificar si existe el id se actualiza o se agrega
 const register = (table,data) => {
+	console.log(data);
 	if(data && data.id){
 		return update(table,data);
 	}else{
@@ -96,7 +97,8 @@ const query = (table, query) => {
 //Función visualiza todos los ticket
 const listTicket = (table) => {
 	return new Promise((resolve, reject) => {
-		connection.query(`SELECT ticket.id, usuario.nombre, ticket.ticket_pedido FROM ticket INNER JOIN usuario ON ticket.id_user = usuario.id `,(err, data) =>{
+		//connection.query(`SELECT ticket.id, usuario.nombre, ticket.ticket_pedido FROM ticket INNER JOIN usuario ON ticket.id_user = usuario.id `,(err, data) =>{
+			connection.query(`SELECT ticket.id, ticket.id_user, ticket.ticket_pedido FROM ticket  `,(err, data) =>{
 			if(err) return reject(err);
 
 			resolve(data);

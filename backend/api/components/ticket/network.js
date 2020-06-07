@@ -70,12 +70,24 @@ const createTicket = (req, res) => {
     	});
 }
 
+const assignedUser = (req, res) => {
+	Controller.assignedUser(req.body)
+    	.then(user =>{
+			res.json({"respuesta":true, user});
+    	})
+    	.catch((err) => {
+			console.log(err.message);
+    		res.json({"message":"Hubo un error en el servidor"});
+    	});
+}
+
 router.get("/:id", listAssigned);
 router.post("/", applyFor);
 router.get("/", listTicket);
 router.put("/", update);
 router.post("/delete", deleteTicket);
 router.post("/create",createTicket);
+router.put("/assigned", assignedUser)
 
 
 module.exports = router;
