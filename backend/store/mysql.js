@@ -38,7 +38,6 @@ handleCon();
 
 //Función para verificar si existe el id se actualiza o se agrega
 const register = (table,data) => {
-	console.log(data);
 	if(data && data.id){
 		return update(table,data);
 	}else{

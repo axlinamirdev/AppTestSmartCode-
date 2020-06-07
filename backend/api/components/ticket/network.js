@@ -76,7 +76,6 @@ const assignedUser = (req, res) => {
 			res.json({"respuesta":true, user});
     	})
     	.catch((err) => {
-			console.log(err.message);
     		res.json({"message":"Hubo un error en el servidor"});
     	});
 }

@@ -33,7 +33,6 @@ const Login = (props) => {
                                     if(parseInt(dataUser.info.id_tipouser)===1){ //Administrador                                        
                                         props.history.push("/ticket");
                                     }else{ //usuario
-                                        console.log("entro1");
                                         props.history.push("/listado");
                                     }
                                 }

@@ -6,7 +6,6 @@ const PerfilUsuario = () => {
 
     const getUser = () => {
         const usuario = JSON.parse(localStorage.getItem('user'));
-        console.log(usuario.id_tipouser);
         if(Object.keys(usuario).length>0)
         {
             return usuario.id_tipouser;
