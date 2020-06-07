@@ -215,7 +215,7 @@ const Listado = () => {
                                         <tr key={index}>
                                             <th scope="row">{item.id}</th>
                                             <td>{item.nombre}</td>
-                                            <td>{(item.ticket_pedido==1) ? "Asignado" : "Pendiente"}</td>
+                                            <td>{(item.ticket_pedido==0) ? "Pendiente" : (item.ticket_pedido==1) ? "Asignado": "Por asignar"}</td>
                                             <td>
                                                 {
                                                     (item.ticket_pedido==0) ? 
