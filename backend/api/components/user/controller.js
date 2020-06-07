@@ -28,9 +28,14 @@ module.exports =(injectedStore) => {
 			return store.register(TABLA, user);
 		}
 		return false;		
-    };
+	};
+	
+	const viewAllUser = () => {
+		return store.rowMultiple(TABLA,  { id_tipouser: 2 });
+	}
 
 	return { 
-		register,	
+		register,
+		viewAllUser	
 	};
 }

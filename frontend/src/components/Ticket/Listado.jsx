@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import useListPerfilUser from "../../hooks/useListPerfilUser";
 import Toastr from 'toastr2';
-
 const toastr = new Toastr();
 
 const Listado = () => {
     const [ ticket, setTicket ] = useState([]);
 
-    const [infoticket, setInfoticket ]= useState({
+    const [ infoticket, setInfoticket ]= useState({
         id: "",
         id_user:"",
         ticket_pedido:1
     });
+    
+    const listuser = useListPerfilUser();
 
     const handleChange = event => {
         setInfoticket({
@@ -252,11 +254,11 @@ const Listado = () => {
                                 <label htmlFor="id_user">Usuario</label>
                                 <select className="form-control" id="id_user" name="id_user" onChange={handleChange}>
                                     <option>- Seleccione -</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+                                    {
+                                        listuser.map(item => 
+                                            <option key={item.id} value={item.id}>{item.nombre}</option>
+                                        )
+                                    }
                                 </select>
                             </div>
                             <button type="submit" className="btn btn-primary mr-2">Agregar</button>
